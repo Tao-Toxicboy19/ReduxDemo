@@ -10,6 +10,8 @@ type Props = {};
 export default function Home({}: Props) {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
+
+  console.log(search)
   useEffect(() => {
     const fetchMovies = async () => {
       const searchKey = search ? search : "Thor";
@@ -18,16 +20,23 @@ export default function Home({}: Props) {
       );
       setTimeout(() => {
         dispatch(adddMovie(res.data.Search));
-      }, 500);
+      }, 0);
     };
     fetchMovies();
-  }, []);
+  }, [search]);
 
   return (
-    <div>
-        <h3>Moveie</h3>
-        <input type="text" placeholder="Search" />
-        <MovieListing/>
+    <div className="container mx-auto">
+      <h3>Moveie</h3>
+      <input
+        type="text"
+        placeholder="Search"
+        value={search}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearch(e.target.value)
+        }
+      />
+      <MovieListing />
     </div>
   );
 }
